@@ -21,31 +21,30 @@ import org.slf4j.LoggerFactory;
  */
 @Named(value = "greeter")
 @Dependent
-public class Greeter implements Serializable{
+public class Greeter implements Serializable {
 
     @Inject
     private JMetter j;
+
     /**
      * Creates a new instance of Greeter
      */
     public Greeter() {
     }
 
-   
-    
-    public String startTest(){
+    public String startTest() {
         j.run();
         return "#";
     }
-    
-    public String getError(){
+
+    public String getError() {
         return j.getError();
     }
-    
-    public String getOutput(){
+
+    public String getOutput() {
         return j.getOutput();
     }
-    
+
     public String getIpAddress() {
         String addr = null;
         try {
@@ -59,6 +58,11 @@ public class Greeter implements Serializable{
                 while (ee.hasMoreElements()) {
                     InetAddress i = (InetAddress) ee.nextElement();
                     LoggerFactory.getLogger(this.getClass()).debug("Found IP address " + i.getHostAddress() + " on " + n.getDisplayName());
+                    //If it is possible skip Virtualbox NAT interface which is not exposed to the world.
+                    //Because it causes generation of inaccessible links
+                    if (addr != null && i.getHostAddress().startsWith("10.0") && n.getDisplayName().equals("eth0")) {
+                        continue;
+                    }
                     addr = i.getHostAddress();
                 }
             }
