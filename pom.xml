@@ -4,7 +4,7 @@
 
     <groupId>ua.pp.msk.forfin</groupId>
     <artifactId>Greeter</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <packaging>war</packaging>
 
     <name>Greeter</name>
