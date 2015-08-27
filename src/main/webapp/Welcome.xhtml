@@ -7,23 +7,61 @@
         <title>Welcome to Maksym Shkolnyi's solution</title>
     </h:head>
     <h:body>
-        <p:layout style="min-width:400px;min-height:200px;">
-            <p:layoutUnit position="north" >
-                <h:outputText value="Welcome!" style="font-size:  x-large; color: #639bd2"/>
-            </p:layoutUnit>
+        <h:outputScript library="js" name="bundle.js"/>
+            <p:layout style="min-width:400px;min-height:200px;">
+                <p:layoutUnit position="north" >
+                    <h:outputText value="Welcome!" style="font-size:  x-large; color: #639bd2"/>
+                </p:layoutUnit>
 
-            <p:layoutUnit position="center">
-                <p:panelGrid columns="2">
+                <p:layoutUnit position="center" style=" min-height: 650px">
+                    <p:panelGrid columns="2">
+                        <p:panel style="border: 0">
+                            <h:graphicImage library="logos" name="zabbix_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
+                            <br/>
+                            <h:link value="Zabbix monitoring" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="Login" for="zabbix_login"/>
+                                <h:outputText id="zabbix_login" value="Admin"/>
+                                <h:outputLabel value="Password" for="zabbix_pass"/>
+                                <h:outputText id="zabbix_pass" value="zabbix"/>
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel style="border: 0">
+                            <h:graphicImage library="logos" name="wildfly_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
+                            <br/>
+                            <h:link value="Wildfly application server" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
+                            <br/>
+                            <h:link value="Wildfly admin console" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html')"/>
+                            <br/>
+                            <h:link value="Wildfly deployments" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html#deployments')"/>
+                            <br/>
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="Login" for="wildfly_login"/>
+                                <h:outputText id="wildfly_login" value="admin"/>
+                                <h:outputLabel value="Password" for="wildfly_pass"/>
+                                <h:outputText id="wildfly_pass" value="wildfly"/>
+                            </p:panelGrid>
+                        </p:panel>
+
+                    </p:panelGrid>
+                    <br/>
                     <p:panel>
-                        <h:outputText value="Zabbix monitoring"/>
+                        <h:form>
+                        <h:graphicImage library="logos" name="jmeter_logo.jpg" />
+                        <br/>
+                        <p:commandButton value="Start JMeter test" actionListener="#{greeter.startTest()}" update="jmetter_log" oncomplete="PF('dlg').show();"/>
+                        </h:form>
                     </p:panel>
-                    <p:panel>
-                        <h:outputText value="Wildfly application server"/>
-                    </p:panel>
-                  
-                </p:panelGrid>
-            </p:layoutUnit>
-        </p:layout>
+                </p:layoutUnit>
+                <p:dialog header="Jmeter Output" widgetVar="dlg" modal="true" >
+                    <p:panelGrid columns="2" id="jmetter_log">
+                        <h:outputLabel value="output" for="jmerr"/>
+                        <h:outputText id="jmerr" value="#{greeter.error}" style="color: red"/>
+                        <h:outputLabel value="output" for="jmout"/>
+                        <h:outputText id="jmout" value="#{greeter.output}"/>
+                    </p:panelGrid>
+                </p:dialog>
+            </p:layout>
     </h:body>
 </html>
 

@@ -4,7 +4,7 @@
 
     <groupId>ua.pp.msk.forfin</groupId>
     <artifactId>Greeter</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>war</packaging>
 
     <name>Greeter</name>
@@ -12,6 +12,11 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+				<wildfly-hostname>127.0.0.1</wildfly-hostname>
+				<wildfly-port>9990</wildfly-port>
+				<wildfly-username>admin</wildfly-username>
+				<wildfly-password>wildfly</wildfly-password>
+                                <wildfly-home>/opt/wildfly</wildfly-home>
     </properties>
     
     <dependencies>
@@ -21,11 +26,39 @@
             <version>5.2</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.10</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+
+        <!--        <dependency>
+            <groupId>org.apache.jmeter</groupId>
+            <artifactId>jorphan</artifactId>
+            <version>2.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.4.1</version>
+        </dependency>-->
+
     </dependencies>
 
     <build>
@@ -49,6 +82,25 @@
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+            </plugin>
+             <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha2</version>
+                <configuration>
+					<hostname>${wildfly-hostname}</hostname>
+					<port>${wildfly-port}</port>
+					<username>${wildfly-username}</username>
+					<password>${wildfly-password}</password>
+				</configuration>
+				<executions>
+					<execution>
+                                            <phase>package</phase> 
+                                            <goals> 
+                                                <goal>deploy</goal> 
+                                            </goals> 
+					</execution>
+				</executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
