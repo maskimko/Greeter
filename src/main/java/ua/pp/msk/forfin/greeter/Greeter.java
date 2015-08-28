@@ -60,7 +60,7 @@ public class Greeter implements Serializable {
                     LoggerFactory.getLogger(this.getClass()).debug("Found IP address " + i.getHostAddress() + " on " + n.getDisplayName());
                     //If it is possible skip Virtualbox NAT interface which is not exposed to the world.
                     //Because it causes generation of inaccessible links
-                    if (addr != null && i.getHostAddress().startsWith("10.0") && n.getDisplayName().equals("eth0")) {
+                    if (addr != null && i.getHostAddress().startsWith("10.0") ) {
                         continue;
                     }
                     addr = i.getHostAddress();
