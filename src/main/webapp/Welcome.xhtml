@@ -2,66 +2,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Welcome to Maksym Shkolnyi's solution</title>
     </h:head>
     <h:body>
         <h:outputScript library="js" name="bundle.js"/>
-            <p:layout style="min-width:400px;min-height:200px;">
-                <p:layoutUnit position="north" >
-                    <h:outputText value="Welcome!" style="font-size:  x-large; color: #639bd2"/>
-                </p:layoutUnit>
+        <p:layout style="min-width:400px;min-height:200px;">
+            <p:layoutUnit position="north" >
+                <h:outputText value="Welcome!" style="font-size:  x-large; color: #639bd2"/>
+            </p:layoutUnit>
 
-                <p:layoutUnit position="center" style=" min-height: 650px">
-                    <p:panelGrid columns="2">
-                        <p:panel style="border: 0">
-                            <h:graphicImage library="logos" name="zabbix_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
-                            <br/>
-                            <h:link value="Zabbix monitoring" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
-                            <p:panelGrid columns="2">
-                                <h:outputLabel value="Login" for="zabbix_login"/>
-                                <h:outputText id="zabbix_login" value="Admin"/>
-                                <h:outputLabel value="Password" for="zabbix_pass"/>
-                                <h:outputText id="zabbix_pass" value="zabbix"/>
-                            </p:panelGrid>
-                        </p:panel>
-                        <p:panel style="border: 0">
-                            <h:graphicImage library="logos" name="wildfly_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
-                            <br/>
-                            <h:link value="Wildfly application server" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
-                            <br/>
-                            <h:link value="Wildfly admin console" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html')"/>
-                            <br/>
-                            <h:link value="Wildfly deployments" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html#deployments')"/>
-                            <br/>
-                            <p:panelGrid columns="2">
-                                <h:outputLabel value="Login" for="wildfly_login"/>
-                                <h:outputText id="wildfly_login" value="admin"/>
-                                <h:outputLabel value="Password" for="wildfly_pass"/>
-                                <h:outputText id="wildfly_pass" value="wildfly"/>
-                            </p:panelGrid>
-                        </p:panel>
+            <p:layoutUnit position="center" style=" min-height: 650px">
+                <p:panelGrid columns="2">
+                    <p:panel style="border: 0">
+                        <h:graphicImage library="logos" name="zabbix_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
+                        <br/>
+                        <h:link value="Zabbix monitoring" onclick="OpenInNewTab('http://#{greeter.ipAddress}:80/zabbix')"/>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Login" for="zabbix_login"/>
+                            <h:outputText id="zabbix_login" value="Admin"/>
+                            <h:outputLabel value="Password" for="zabbix_pass"/>
+                            <h:outputText id="zabbix_pass" value="zabbix"/>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel style="border: 0">
+                        <h:graphicImage library="logos" name="wildfly_logo.png" style="width: 500; height: 131" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
+                        <br/>
+                        <h:link value="Wildfly application server" onclick="OpenInNewTab('http://#{greeter.ipAddress}:8080')"/>
+                        <br/>
+                        <h:link value="Wildfly admin console" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html')"/>
+                        <br/>
+                        <h:link value="Wildfly deployments" onclick="OpenInNewTab('http://#{greeter.ipAddress}:9990/console/App.html#deployments')"/>
+                        <br/>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Login" for="wildfly_login"/>
+                            <h:outputText id="wildfly_login" value="admin"/>
+                            <h:outputLabel value="Password" for="wildfly_pass"/>
+                            <h:outputText id="wildfly_pass" value="wildfly"/>
+                        </p:panelGrid>
+                    </p:panel>
 
-                    </p:panelGrid>
-                    <br/>
-                    <p:panel>
-                        <h:form>
+                </p:panelGrid>
+                <br/>
+                <p:panel>
+                    <h:form>
                         <h:graphicImage library="logos" name="jmeter_logo.jpg" />
                         <br/>
+                        <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+                            <f:facet name="default">
+                                <h:outputText value="Status: StandBy" />
+                            </f:facet>
+                            <f:facet name="start">
+                                <p:graphicImage library="sys" name="ajax-loading-bar-blue.gif" />
+                            </f:facet>
+
+                            <f:facet name="complete">
+                                <h:outputText value="Status: Completed" style="color: green"/>
+                            </f:facet>
+                        </p:ajaxStatus>
                         <p:commandButton value="Start JMeter test" actionListener="#{greeter.startTest()}" update="jmetter_log" oncomplete="PF('dlg').show();"/>
-                        </h:form>
-                    </p:panel>
-                </p:layoutUnit>
-                <p:dialog header="Jmeter Output" widgetVar="dlg" modal="true" >
+                    </h:form>
+                </p:panel>
+            </p:layoutUnit>
+            <p:dialog header="Jmeter Output" widgetVar="dlg" modal="true" >
+                <p:panel style="max-height: 600px; max-width: 800px;">
                     <p:panelGrid columns="2" id="jmetter_log">
                         <h:outputLabel value="output" for="jmerr"/>
                         <h:outputText id="jmerr" value="#{greeter.error}" style="color: red"/>
                         <h:outputLabel value="output" for="jmout"/>
                         <h:outputText id="jmout" value="#{greeter.output}"/>
                     </p:panelGrid>
-                </p:dialog>
-            </p:layout>
+                </p:panel>
+            </p:dialog>
+        </p:layout>
     </h:body>
 </html>
 
